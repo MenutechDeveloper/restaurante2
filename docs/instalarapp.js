@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       deferredPrompt = null;
     } else {
       // Si no hay instalación disponible
-      alert('Esta app ya está instalada o no es compatible.');
+      alert('This app is already installed');
     }
   });
 });
