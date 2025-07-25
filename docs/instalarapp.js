@@ -1,16 +1,8 @@
 // Guarda el evento para mostrar el cuadro de instalación
 let deferredPrompt;
 
-// ✅ Espera al DOM para manipular elementos
 document.addEventListener('DOMContentLoaded', () => {
   const installBtn = document.getElementById('installBtn');
-  const installContainer = document.getElementById('installContainer');
-
-  // ✅ Ocultar botón si la app ya fue instalada antes
-  if (localStorage.getItem('pwaInstalled') === 'true') {
-    if (installContainer) installContainer.remove();
-    return;
-  }
 
   // ✅ Mostrar botón si el navegador lanza el evento
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -31,11 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if (choiceResult.outcome === 'accepted') {
           console.log('✅ Instalación aceptada');
-          localStorage.setItem('pwaInstalled', 'true');
-
-          if (installContainer) {
-            installContainer.remove(); // ✅ Reacomoda el grid
-          }
         } else {
           console.log('❌ Instalación rechazada');
         }
@@ -54,7 +41,6 @@ if ('serviceWorker' in navigator) {
       .catch(err => console.error('Error al registrar el Service Worker', err));
   });
 }
-
 
 
 
