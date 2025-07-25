@@ -1,43 +1,37 @@
-// Guarda el evento para mostrar el cuadro de instalación
 let deferredPrompt;
 
 document.addEventListener('DOMContentLoaded', () => {
   const installBtn = document.getElementById('installBtn');
 
-  // ✅ Mostrar botón si el navegador lanza el evento
+  // El navegador lanza este evento SOLO si la PWA es instalable
   window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
 
-    
+    // Opcional: podrías agregar una clase para indicar que está activo
+    installBtn.classList.add('instalable');
+  });
 
-  // ✅ Instalar app al hacer clic
-  if (installBtn) {
-    installBtn.addEventListener('click', async () => {
-      if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const choiceResult = await deferredPrompt.userChoice;
+  // Al hacer clic en el botón
+  installBtn.addEventListener('click', async () => {
+    if (deferredPrompt) {
+      deferredPrompt.prompt();
+      const choiceResult = await deferredPrompt.userChoice;
 
-        if (choiceResult.outcome === 'accepted') {
-          console.log('✅ Instalación aceptada');
-        } else {
-          console.log('❌ Instalación rechazada');
-        }
-
-        deferredPrompt = null;
+      if (choiceResult.outcome === 'accepted') {
+        console.log('✅ Usuario aceptó instalar la app');
+      } else {
+        console.log('❌ Usuario rechazó la instalación');
       }
-    });
-  }
+
+      deferredPrompt = null;
+    } else {
+      // Si no hay instalación disponible
+      alert('Esta app ya está instalada o no es compatible.');
+    }
+  });
 });
 
-// ✅ Registrar Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js')
-      .then(reg => console.log('Service Worker registrado'))
-      .catch(err => console.error('Error al registrar el Service Worker', err));
-  });
-}
 
 
 
