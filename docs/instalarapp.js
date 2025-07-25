@@ -9,10 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
     deferredPrompt = e;
 
-    if (installBtn) {
-      installBtn.style.display = 'block';
-    }
-  });
+    
 
   // ✅ Instalar app al hacer clic
   if (installBtn) {
